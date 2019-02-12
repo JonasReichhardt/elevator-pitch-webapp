@@ -1,0 +1,73 @@
+<html>
+
+<head>
+  <title>Elevator Pitch Voting</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+</head>
+
+<body class="teal lighten-3 centered center-align">
+  <h1>Willkommen zu den Elevator Pitches</h1>
+  <h4>Hier kannst du dein Geld investieren</h4>
+
+  <br><br>
+
+  <div class="row center-align" id="login">
+    <div class="col s12 m4"></div>
+    <div class="col s12 m4">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <input placeholder="Benutzername" type="text" id="user" class="input-field">
+          <button class="waves-effect waves-light btn white-text text-white" onclick="loginUsr()">Anmelden</button>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m4"></div>
+  </div>
+
+  <div class="row center-align" id="form" style="display: none">
+    <div class="col s12 m4"></div>
+    <div class="col s12 m4">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <input placeholder="Investment in Euro" type="text" id="investment" class="input-field">
+          <div class="black-text">
+            <select class="input-field" id="project" style="display: block" name="prj">
+              <option value="" disabled selected>Wähle das Projekt</option>
+              <option value="Teadicted">Teadicted</option>
+              <option value="HALSS">HALSS</option>
+              <option value="SWOA">SWOA</option>
+              <option value="Culture in a Box">Culture in a Box</option>
+              <option value="FashionBit">FashionBit</option>
+              <option value="FKWare">FKWare</option>
+              <option value="Cookify">Cookify</option>
+              <option value="SmartSchool">SmartSchool</option>
+              <option value="Coffee Mirror">Coffee Mirror</option>
+            </select>
+          </div>
+
+
+          <b>
+            <h5 id="amount">Guthaben: 0</h5>
+          </b>
+          <button class="waves-effect waves-light btn white-text text-white" onclick="invest()">Investieren</button>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m4"></div>
+  </div>
+
+  <h4 style="color: crimson" id="error"></h4>
+
+  <br>
+  <br><br>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/index.js"></script>
+</body>
+
+</html>
