@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Elevator Pitch Voting</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+  </head>
+
+  <body class="teal lighten-3 centered center-align">
+    <h1>Elevator Pitch Ergebnisse</h1>
+
+    <br /><br />
+
+    <div class="row center-align">
+      <div class="col s12 m4"></div>
+      <div class="col s12 m4">
+        <canvas id="results" width="400" height="400"></canvas>
+      </div>
+      <div class="col s12 m4"></div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/palette.js"></script>
+    <script src="/chart.js"></script>
+  </body>
+</html>
