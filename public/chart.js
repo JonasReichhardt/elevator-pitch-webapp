@@ -3,17 +3,15 @@ var ctx = document.getElementById("results").getContext("2d");
 
 
 socket.on("update", function(names, amounts) {
-  console.log(names)
-  console.log(amounts)
   new Chart(ctx, {
     type: "pie",
     data: {
       labels: names,
       datasets: [
         {
-          label: "# of Votes",
+          label: 'Amount',
           data: amounts,
-          backgroundColor: palette('tol', amounts.length).map(function(hex) {
+          backgroundColor: palette('tol-rainbow', amounts.length).map(function(hex) {
             return '#' + hex;
           })
         }
