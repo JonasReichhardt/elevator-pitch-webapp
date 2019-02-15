@@ -17,11 +17,7 @@ function invest() {
   if (value < 0) {
     error.innerHTML = "Keine valide Zahl";
   } else {
-    console.log(value, amount);
     if (amount >= value) {
-      console.log(
-        username + " trying to invest " + value + " into " + project.value
-      );
       socket.emit("invest", username, project.value, value);
       error.innerHTML = "";
     } else {

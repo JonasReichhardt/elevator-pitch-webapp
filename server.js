@@ -41,9 +41,6 @@ io.on("connection", function (socket) {
             users.value[users.names.indexOf(user)] -= parseFloat(amount);
             io.sockets.emit("update", projects.names, projects.amount);
             socket.emit("invested", user, amount);
-            console.log(projects.names);
-            console.log(projects.amount);
-            console.log("---------------------------------------------------");
           }
         }
       } else {
@@ -60,7 +57,6 @@ io.on("connection", function (socket) {
   });
   socket.on("update chart", () => {
     socket.emit("update", projects.names, projects.amount);
-    console.log(projects.names,projects.amount)
   });
 });
 
