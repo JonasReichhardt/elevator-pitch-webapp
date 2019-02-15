@@ -20,15 +20,14 @@ loadConf();
 setAmount();
 
 //setup server
-server.listen(port, function() {
+server.listen(port, function () {
   console.log("Server is listening on port:" + port);
 });
 app.use(express.static(__dirname + "/public"));
 
 //Socket.io events
-io.on("connection", function(socket) {
-  console.log("connection");
-  socket.on("invest", function(user, project, amount) {
+io.on("connection", function (socket) {
+  socket.on("invest", function (user, project, amount) {
     if (amount > 0) {
       if (users.names.indexOf(user) !== -1) {
         if (projects.names.indexOf(project) !== -1) {
@@ -52,7 +51,7 @@ io.on("connection", function(socket) {
       }
     }
   });
-  socket.on("new user", function(user) {
+  socket.on("new user", function (user) {
     if (users.names.indexOf(user) !== -1) {
       socket.emit("set amount", user, users.value[users.names.indexOf(user)]);
     } else {
@@ -61,6 +60,7 @@ io.on("connection", function(socket) {
   });
   socket.on("update chart", () => {
     socket.emit("update", projects.names, projects.amount);
+    console.log(projects.names,projects.amount)
   });
 });
 

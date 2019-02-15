@@ -3,6 +3,8 @@ var ctx = document.getElementById("results").getContext("2d");
 
 
 socket.on("update", function(names, amounts) {
+  console.log(names)
+  console.log(amounts)
   new Chart(ctx, {
     type: "pie",
     data: {

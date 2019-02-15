@@ -11,17 +11,18 @@ var form = document.getElementById("form");
 var user = document.getElementById("user");
 var money = document.getElementById("amount");
 
+// validate give amount and send it to the server
 function invest() {
-  const invsetjwer = parseFloat(investment.value);
-  if (invsetjwer < 0) {
+  const value = parseFloat(investment.value);
+  if (value < 0) {
     error.innerHTML = "Keine valide Zahl";
   } else {
-    console.log(invsetjwer, amount);
-    if (amount >= invsetjwer) {
+    console.log(value, amount);
+    if (amount >= value) {
       console.log(
-        username + " trying to invest " + invsetjwer + " into " + project.value
+        username + " trying to invest " + value + " into " + project.value
       );
-      socket.emit("invest", username, project.value, invsetjwer);
+      socket.emit("invest", username, project.value, value);
       error.innerHTML = "";
     } else {
       error.innerHTML = "Zu wenig Guthaben";
@@ -38,7 +39,7 @@ function loginUsr() {
   form.style.display = "block";
 }
 
-socket.on("set amount", function(user, AMOUNT) {
+socket.on("set amount", function (user, AMOUNT) {
   if (username === user) {
     amount = AMOUNT;
     known = true;
@@ -46,7 +47,7 @@ socket.on("set amount", function(user, AMOUNT) {
   }
 });
 
-socket.on("invested", function(user, AMOUNT) {
+socket.on("invested", function (user, AMOUNT) {
   if (username === user) {
     amount -= AMOUNT;
     money.innerHTML = "Guthaben: " + amount;
@@ -54,7 +55,7 @@ socket.on("invested", function(user, AMOUNT) {
   }
 });
 
-socket.on("not a user", function(user) {
+socket.on("not a user", function (user) {
   if (user === username) {
     form.style.display = "none";
     error.innerHTML = "IF-Nummer falsch";
@@ -62,7 +63,7 @@ socket.on("not a user", function(user) {
 });
 
 // add EventListener for Enter event
-window.addEventListener("keydown", function(event) {
+window.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     if (login.style.display === "none") {
       invest();
