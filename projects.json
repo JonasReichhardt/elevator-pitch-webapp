@@ -1,4 +1,21 @@
 {
-	"names":["Teadicted","HALSS","SWOA","Culture in a Box","FashionBit","FKWare","Cookify","SmartSchool","Coffee Mirror"],
-	"amount":[0,0,0,0,0,0,0,0,0]
+	"names": [
+		"Teadicted",
+		"HALSS",
+		"SWOA",
+		"Culture in a Box",
+		"FashionBit",
+		"FKWare",
+		"Cookify",
+		"SmartSchool",
+		"Coffee Mirror",
+		"Calinca GmbH",
+		"CloudLounge",
+		"NowoSight",
+		"VRHoliday",
+		"Bartender Systems"
+	],
+	"amount": [
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0
+	]
 }
