@@ -16,23 +16,23 @@ function invest() {
   const value = parseFloat(investment.value);
   if (value < 0) {
     error.innerHTML = "Keine valide Zahl";
-  } else {
-    if (amount >= value) {
-      socket.emit("invest", username, project.value, value);
-      error.innerHTML = "";
-    } else {
-      error.innerHTML = "Zu wenig Guthaben";
-    }
+    return
   }
+  if (amount <= value) {
+    error.innerHTML = "Zu wenig Guthaben";
+    return
+  }
+  socket.emit("invest", username, project.value, value);
+  error.innerHTML = "";
 }
 
 function loginUsr() {
   username = user.value;
   if (!known && username != "") {
     socket.emit("new user", username);
+    login.style.display = "none";
+    form.style.display = "block";
   }
-  login.style.display = "none";
-  form.style.display = "block";
 }
 
 socket.on("set amount", function (user, AMOUNT) {

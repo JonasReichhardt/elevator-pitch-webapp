@@ -28,32 +28,31 @@ app.use(express.static(__dirname + "/public"));
 //Socket.io events
 io.on("connection", function (socket) {
   socket.on("invest", function (user, project, amount) {
-    if (amount > 0) {
-      if (users.names.indexOf(user) !== -1) {
-        if (projects.names.indexOf(project) !== -1) {
-          if (users.value[users.names.indexOf(user)] - amount >= 0) {
-            console.log(
-              user + " hat " + amount + " Euro in " + project + " investiert"
-            );
-            projects.amount[projects.names.indexOf(project)] += parseFloat(
-              amount
-            );
-            users.value[users.names.indexOf(user)] -= parseFloat(amount);
-            io.sockets.emit("update", projects.names, projects.amount);
-            socket.emit("invested", user, amount);
-          }
-        }
-      } else {
-        socket.emit("not a user", user);
-      }
+    if (amount <= 0) {
+      return
     }
+    if (users.names.indexOf(user) === -1) {
+      socket.emit("not a user",user);
+      return
+    }
+    if (users.value[users.names.indexOf(user)] - amount <= 0) {
+      return
+    }
+
+    projects.amount[projects.names.indexOf(project)] += parseFloat(amount);
+    users.value[users.names.indexOf(user)] -= parseFloat(amount);
+    console.log(user + " hat " + amount + " Euro in " + project + " investiert");
+
+    io.sockets.emit("update", projects.names, projects.amount);
+    socket.emit("invested", user, amount);
   });
   socket.on("new user", function (user) {
-    if (users.names.indexOf(user) !== -1) {
-      socket.emit("set amount", user, users.value[users.names.indexOf(user)]);
-    } else {
+    if (users.names.indexOf(user) === -1) {
       socket.emit("not a user", user);
+      return
+      
     }
+    socket.emit("set amount", user, users.value[users.names.indexOf(user)]);
   });
   socket.on("update chart", () => {
     socket.emit("update", projects.names, projects.amount);
