@@ -6,13 +6,14 @@ const fs = require("fs");
 const prjFile = "projects.json";
 const usrFile = "users.json";
 const enc = "utf8";
+const AMOUNT = 100000;
 
 const app = express();
 const server = http.createServer(app);
 const io = sio(server);
 const port = process.env.PORT || 3000;
 
-var AMOUNT;
+var curAmount;
 var projects;
 var users;
 
@@ -28,13 +29,16 @@ app.use(express.static(__dirname + "/public"));
 //Socket.io events
 io.on("connection", function (socket) {
   socket.on("invest", function (user, project, amount) {
+    // valid amount
     if (amount <= 0) {
       return
     }
+    // valid username
     if (users.names.indexOf(user) === -1) {
-      socket.emit("not a user",user);
+      socket.emit("not a user", user);
       return
     }
+    // enough credits
     if (users.value[users.names.indexOf(user)] - amount <= 0) {
       return
     }
@@ -50,7 +54,6 @@ io.on("connection", function (socket) {
     if (users.names.indexOf(user) === -1) {
       socket.emit("not a user", user);
       return
-      
     }
     socket.emit("set amount", user, users.value[users.names.indexOf(user)]);
   });
@@ -68,12 +71,12 @@ function loadConf() {
 // check command line arguments
 function setAmount() {
   if (process.argv.length > 2) {
-    AMOUNT = process.argv[2];
+    curAmount = process.argv[2];
   } else {
-    AMOUNT = 100000;
+    curAmount = AMOUNT;
   }
-  console.log("Budget pro Benutzer: " + AMOUNT);
+  console.log("Budget pro Benutzer: " + curAmount);
   for (var i = 0; i < users.names.length; i++) {
-    users.value.push(AMOUNT);
+    users.value.push(curAmount);
   }
 }

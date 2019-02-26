@@ -60,11 +60,12 @@ socket.on("not a user", function (user) {
 
 // add EventListener for Enter event
 window.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    if (login.style.display === "none") {
+  if (event.key !== "Enter") {
+    return
+  }
+  if (login.style.display === "none") {
       invest();
     } else {
       loginUsr();
     }
-  }
 });
