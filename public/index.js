@@ -11,15 +11,19 @@ var form = document.getElementById("form");
 var user = document.getElementById("user");
 var money = document.getElementById("amount");
 
-// validate give amount and send it to the server
+// validate amount and send it to the server
 function invest() {
   const value = parseFloat(investment.value);
   if (value < 0) {
     error.innerHTML = "Keine valide Zahl";
     return
   }
-  if (amount <= value) {
+  if (amount < value) {
     error.innerHTML = "Zu wenig Guthaben";
+    return
+  }
+  if(project.value === ""){
+    error.innerHTML = "Kein Projekt ausgewählt";
     return
   }
   socket.emit("invest", username, project.value, value);

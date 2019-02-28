@@ -49,6 +49,7 @@ io.on("connection", function (socket) {
 
     io.sockets.emit("update", projects.names, projects.amount);
     socket.emit("invested", user, amount);
+    console.log(projects)
   });
   socket.on("new user", function (user) {
     if (users.names.indexOf(user) === -1) {
