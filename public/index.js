@@ -3,7 +3,6 @@ let username;
 let known = false;
 let amount = 0;
 
-var investment = document.getElementById("investment");
 var project = document.getElementById("project");
 var error = document.getElementById("error");
 var login = document.getElementById("login");
@@ -12,10 +11,14 @@ var user = document.getElementById("user");
 var money = document.getElementById("amount");
 
 // validate amount and send it to the server
-function invest() {
-  const value = parseFloat(investment.value);
+function invest(investment) {
+  const value = parseInt(investment);
+  
   if (value < 0) {
     error.innerHTML = "Keine valide Zahl";
+    return
+  }
+  if(value%10 !== 0){
     return
   }
   if (amount < value) {
@@ -43,14 +46,14 @@ socket.on("set amount", function (user, AMOUNT) {
   if (username === user) {
     amount = AMOUNT;
     known = true;
-    money.innerHTML = "Guthaben: " + amount;
+    money.innerHTML = "Guthaben: " + amount + "&euro;";
   }
 });
 
 socket.on("invested", function (user, AMOUNT) {
   if (username === user) {
     amount -= AMOUNT;
-    money.innerHTML = "Guthaben: " + amount;
+    money.innerHTML = "Guthaben: " + amount + "&euro;";
     socket.emit("update chart");
   }
 });
