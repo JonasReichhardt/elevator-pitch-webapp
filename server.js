@@ -30,7 +30,7 @@ app.use(express.static(__dirname + "/public"));
 io.on("connection", function (socket) {
   socket.on("invest", function (user, project, amount) {
     // valid amount
-    if (amount <= 0) {
+    if (amount !== 1000 && amount !== 10000 && amount !== 25000) {
       return
     }
     // valid username
@@ -39,7 +39,7 @@ io.on("connection", function (socket) {
       return
     }
     // enough credits
-    if (users.value[users.names.indexOf(user)] - amount <= 0) {
+    if (users.value[users.names.indexOf(user)] - amount < 0) {
       return
     }
 
@@ -49,7 +49,6 @@ io.on("connection", function (socket) {
 
     io.sockets.emit("update", projects.names, projects.amount);
     socket.emit("invested", user, amount);
-    console.log(projects)
   });
   socket.on("new user", function (user) {
     if (users.names.indexOf(user) === -1) {

@@ -1,5 +1,5 @@
-const socket = io();
-var ctx = document.getElementById("results").getContext("2d");
+const socket = io()
+var ctx = document.getElementById("results").getContext("2d")
 var first = document.getElementById("first")
 var second = document.getElementById("second")
 var third = document.getElementById("third")
@@ -7,24 +7,32 @@ var third = document.getElementById("third")
 
 socket.on("update", function (names, amounts) {
   // update leaderboard
-  leaders = amounts.sort((a, b) => a - b);
-  leaders = leaders.reverse();
-  if (leaders[0] !== 0) {
-    first.innerHTML = "1. " + names[amounts.indexOf(leaders[0])];
+  var struct = []
+  for(var i = 0; i < names.length; i++){
+    struct.push({name:names[i],amount:amounts[i]});
   }
-  if(leaders[1] !== 0 ){
-    second.innerHTML = "2. " + names[amounts.indexOf(leaders[1])];
+  var sorted = struct.sort(compare).reverse();
+
+  if(sorted[0].amount === sorted[1].amount || sorted[0].amount === sorted[2].amount){
+    first.className = "green-text"
   }
-  if(leaders[2] !== 0){
-    third.innerHTML = "3. " + names[amounts.indexOf(leaders[2])];
+  if(sorted[0].amount === sorted[1].amount || sorted[1].amount === sorted[2].amount ){
+    second.className = "green-text"
   }
+  if(sorted[0].amount === sorted[2].amount || sorted[2].amount === sorted[1].amount){
+    third.className = "green-text"
+  }
+
+  first.innerHTML = "1. "+sorted[0].name
+  second.innerHTML = "2. "+sorted[1].name
+  third.innerHTML = "3. "+sorted[2].name
 
   // repaint chart
   new Chart(ctx, {
     type: "pie",
     data: {
       labels: names,
-      pointLabelFontSize : 16,
+      pointLabelFontSize: 16,
       scaleFontSize: 16,
       datasets: [
         {
@@ -45,3 +53,13 @@ socket.on("update", function (names, amounts) {
 });
 
 socket.emit("update chart");
+
+function compare(a,b){
+  if(a.amount < b.amount){
+    return -1
+  }
+  if(a.amount > b.amount){
+    return 1;
+  }
+  return 0;
+}
