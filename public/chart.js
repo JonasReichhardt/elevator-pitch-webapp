@@ -14,13 +14,13 @@ socket.on("update", function (names, amounts) {
   var sorted = struct.sort(compare).reverse();
 
   if(sorted[0].amount === sorted[1].amount || sorted[0].amount === sorted[2].amount){
-    first.className = "green-text"
+    first.className = "yellow-text"
   }
   if(sorted[0].amount === sorted[1].amount || sorted[1].amount === sorted[2].amount ){
-    second.className = "green-text"
+    second.className = "yellow-text"
   }
   if(sorted[0].amount === sorted[2].amount || sorted[2].amount === sorted[1].amount){
-    third.className = "green-text"
+    third.className = "yellow-text"
   }
 
   first.innerHTML = "1. "+sorted[0].name
@@ -32,8 +32,8 @@ socket.on("update", function (names, amounts) {
     type: "pie",
     data: {
       labels: names,
-      pointLabelFontSize: 16,
-      scaleFontSize: 16,
+      pointLabelFontSize: 30,
+      scaleFontSize: 30,
       datasets: [
         {
           label: 'Amount',
@@ -45,6 +45,12 @@ socket.on("update", function (names, amounts) {
       ]
     },
     options: {
+      legend:{
+        labels:{
+          fontSize: 30,
+          fontColor: "#000000"
+        }
+      },
       animation: {
         animateRotate: false //to prevent reload animation
       }

@@ -39,12 +39,12 @@ io.on("connection", function (socket) {
       return
     }
     // enough credits
-    if (users.value[users.names.indexOf(user)] - amount < 0) {
+    if (users.values[users.names.indexOf(user)] - amount < 0) {
       return
     }
 
     projects.amount[projects.names.indexOf(project)] += parseFloat(amount);
-    users.value[users.names.indexOf(user)] -= parseFloat(amount);
+    users.values[users.names.indexOf(user)] -= parseFloat(amount);
     console.log(user + " hat " + amount + " Euro in " + project + " investiert");
 
     io.sockets.emit("update", projects.names, projects.amount);
@@ -55,7 +55,7 @@ io.on("connection", function (socket) {
       socket.emit("not a user", user);
       return
     }
-    socket.emit("set amount", user, users.value[users.names.indexOf(user)]);
+    socket.emit("set amount", user, users.values[users.names.indexOf(user)]);
   });
   socket.on("update chart", () => {
     socket.emit("update", projects.names, projects.amount);
@@ -77,6 +77,6 @@ function setAmount() {
   }
   console.log("Budget pro Benutzer: " + curAmount);
   for (var i = 0; i < users.names.length; i++) {
-    users.value.push(curAmount);
+    users.values.push(curAmount);
   }
 }
